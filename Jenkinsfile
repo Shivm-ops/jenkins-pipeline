@@ -1,26 +1,21 @@
 pipeline {
-    agent any
-
-    // This block tells Jenkins to look for the 'docker' tool you just configured
-    tools {
-        dockerTool 'docker' 
-    }
-
-    environment {
-        IMAGE_NAME = "my-web-app"
-    }
+    agent any 
 
     stages {
-        stage('Build Docker Image') {
+        stage('Fetch Code') {
             steps {
-                // Now Jenkins will know what 'docker' is
-                sh "docker build -t ${IMAGE_NAME}:${BUILD_ID} ."
+                echo 'Checking out code from Git...'
             }
         }
-        
-        stage('Test') {
+        stage('Build') {
             steps {
-                sh "docker --version"
+                echo 'Building...'
+                sh 'uptime'
+            }
+        }
+        stage('Finish') {
+            steps {
+                echo 'Pipeline completed successfully!'
             }
         }
     }
